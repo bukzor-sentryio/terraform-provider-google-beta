@@ -445,6 +445,7 @@ func ResourceContainerCluster() *schema.Resource {
 							Type:          schema.TypeList,
 							Optional:      true,
 							Description:   `Global constraints for machine resources in the cluster. Configuring the cpu and memory types is required if node auto-provisioning is enabled. These limits will apply to node pool autoscaling in addition to node auto-provisioning.`,
+							ConflictsWith: []string{"enable_autopilot"},
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"resource_type": {
@@ -515,6 +516,7 @@ func ResourceContainerCluster() *schema.Resource {
 							Optional:      true,
 							ValidateFunc:  validation.StringInSlice([]string{"BALANCED", "OPTIMIZE_UTILIZATION"}, false),
 							Description:   `Configuration options for the Autoscaling profile feature, which lets you choose whether the cluster autoscaler should optimize for resource utilization or resource availability when deciding to remove nodes from a cluster. Can be BALANCED or OPTIMIZE_UTILIZATION. Defaults to BALANCED.`,
+							ConflictsWith: []string{"enable_autopilot"},
 						},
 					},
 				},
@@ -1026,7 +1028,6 @@ func ResourceContainerCluster() *schema.Resource {
 					Schema: schemaNodePool,
 				},
 				Description: `List of node pools associated with this cluster. See google_container_node_pool for schema. Warning: node pools defined inside a cluster can't be changed (or added/removed) after cluster creation without deleting and recreating the entire cluster. Unless you absolutely need the ability to say "these are the only node pools associated with this cluster", use the google_container_node_pool resource instead of this property.`,
-				ConflictsWith: []string{"enable_autopilot"},
 			},
 
 			"node_pool_defaults": clusterSchemaNodePoolDefaults(),
