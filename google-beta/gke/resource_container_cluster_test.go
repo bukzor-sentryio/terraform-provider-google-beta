@@ -1,4 +1,4 @@
-package google
+package gke
 
 import (
 	"bytes"

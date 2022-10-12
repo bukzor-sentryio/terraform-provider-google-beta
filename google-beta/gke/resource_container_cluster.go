@@ -1,4 +1,4 @@
-package google
+package gke
 
 import (
 	"context"
@@ -140,7 +140,7 @@ func isBeenEnabled(_ context.Context, old, new, _ interface{}) bool {
 	return false
 }
 
-func resourceContainerCluster() *schema.Resource {
+func ResourceContainerCluster() *schema.Resource {
 	return &schema.Resource{
 		UseJSONNumber: true,
 		Create:        resourceContainerClusterCreate,
@@ -442,9 +442,9 @@ func resourceContainerCluster() *schema.Resource {
 							Description: `Whether node auto-provisioning is enabled. Resource limits for cpu and memory must be defined to enable node auto-provisioning.`,
 						},
 						"resource_limits": {
-							Type:        schema.TypeList,
-							Optional:    true,
-							Description: `Global constraints for machine resources in the cluster. Configuring the cpu and memory types is required if node auto-provisioning is enabled. These limits will apply to node pool autoscaling in addition to node auto-provisioning.`,
+							Type:          schema.TypeList,
+							Optional:      true,
+							Description:   `Global constraints for machine resources in the cluster. Configuring the cpu and memory types is required if node auto-provisioning is enabled. These limits will apply to node pool autoscaling in addition to node auto-provisioning.`,
 							Elem: &schema.Resource{
 								Schema: map[string]*schema.Schema{
 									"resource_type": {
@@ -510,11 +510,11 @@ func resourceContainerCluster() *schema.Resource {
 							},
 						},
 						"autoscaling_profile": {
-							Type:         schema.TypeString,
-							Default:      "BALANCED",
-							Optional:     true,
-							ValidateFunc: validation.StringInSlice([]string{"BALANCED", "OPTIMIZE_UTILIZATION"}, false),
-							Description:  `Configuration options for the Autoscaling profile feature, which lets you choose whether the cluster autoscaler should optimize for resource utilization or resource availability when deciding to remove nodes from a cluster. Can be BALANCED or OPTIMIZE_UTILIZATION. Defaults to BALANCED.`,
+							Type:          schema.TypeString,
+							Default:       "BALANCED",
+							Optional:      true,
+							ValidateFunc:  validation.StringInSlice([]string{"BALANCED", "OPTIMIZE_UTILIZATION"}, false),
+							Description:   `Configuration options for the Autoscaling profile feature, which lets you choose whether the cluster autoscaler should optimize for resource utilization or resource availability when deciding to remove nodes from a cluster. Can be BALANCED or OPTIMIZE_UTILIZATION. Defaults to BALANCED.`,
 						},
 					},
 				},
@@ -1025,7 +1025,7 @@ func resourceContainerCluster() *schema.Resource {
 				Elem: &schema.Resource{
 					Schema: schemaNodePool,
 				},
-				Description:   `List of node pools associated with this cluster. See google_container_node_pool for schema. Warning: node pools defined inside a cluster can't be changed (or added/removed) after cluster creation without deleting and recreating the entire cluster. Unless you absolutely need the ability to say "these are the only node pools associated with this cluster", use the google_container_node_pool resource instead of this property.`,
+				Description: `List of node pools associated with this cluster. See google_container_node_pool for schema. Warning: node pools defined inside a cluster can't be changed (or added/removed) after cluster creation without deleting and recreating the entire cluster. Unless you absolutely need the ability to say "these are the only node pools associated with this cluster", use the google_container_node_pool resource instead of this property.`,
 				ConflictsWith: []string{"enable_autopilot"},
 			},
 
@@ -2911,7 +2911,7 @@ func resourceContainerClusterUpdate(d *schema.ResourceData, meta interface{}) er
 		if err := lockedCall(lockKey, updateF); err != nil {
 			return err
 		}
-		log.Printf("[INFO] GKE cluster %s service externalips config  has been updated", d.Id())
+		log.Printf("[INFO] GKE cluster %s service externalips config has been updated", d.Id())
 	}
 
 	if d.HasChange("mesh_certificates") {

@@ -1,4 +1,4 @@
-package google
+package gke
 
 // A StateType represents the specific type of resting state that a state value
 // is.

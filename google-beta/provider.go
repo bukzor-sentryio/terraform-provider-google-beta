@@ -6,6 +6,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/hashicorp/terraform-provider-google-beta/google-beta/gke"
+
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-provider-google-beta/version"
@@ -901,7 +903,7 @@ func Provider() *schema.Provider {
 			"google_compute_zones":                                dataSourceGoogleComputeZones(),
 			"google_container_azure_versions":                     dataSourceGoogleContainerAzureVersions(),
 			"google_container_aws_versions":                       dataSourceGoogleContainerAwsVersions(),
-			"google_container_cluster":                            dataSourceGoogleContainerCluster(),
+			"google_container_cluster":                            gke.DataSourceGoogleContainerCluster(),
 			"google_container_engine_versions":                    dataSourceGoogleContainerEngineVersions(),
 			"google_container_registry_image":                     dataSourceGoogleContainerImage(),
 			"google_container_registry_repository":                dataSourceGoogleContainerRepo(),
@@ -1465,8 +1467,8 @@ func ResourceMapWithErrors() (map[string]*schema.Resource, error) {
 			"google_compute_shared_vpc_host_project":       resourceComputeSharedVpcHostProject(),
 			"google_compute_shared_vpc_service_project":    resourceComputeSharedVpcServiceProject(),
 			"google_compute_target_pool":                   resourceComputeTargetPool(),
-			"google_container_cluster":                     resourceContainerCluster(),
-			"google_container_node_pool":                   resourceContainerNodePool(),
+			"google_container_cluster":                     gke.ResourceContainerCluster(),
+			"google_container_node_pool":                   gke.ResourceContainerNodePool(),
 			"google_container_registry":                    resourceContainerRegistry(),
 			"google_dataflow_job":                          resourceDataflowJob(),
 			"google_dataflow_flex_template_job":            resourceDataflowFlexTemplateJob(),

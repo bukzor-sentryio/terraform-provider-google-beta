@@ -1,6 +1,6 @@
 // Contains common diff suppress functions.
 
-package google
+package gke
 
 import (
 	"crypto/sha256"
@@ -76,11 +76,6 @@ func ipCidrRangeDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
 	}
 
 	return false
-}
-
-func cidrOrSizeDiffSuppress(k, old, new string, d *schema.ResourceData) bool {
-	// If the user specified a size and the API returned a full cidr block, suppress.
-	return strings.HasPrefix(new, "/") && strings.HasSuffix(old, new)
 }
 
 // sha256DiffSuppress

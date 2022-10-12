@@ -1,12 +1,12 @@
-package google
+package gke
 
 import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 )
 
-func dataSourceGoogleContainerCluster() *schema.Resource {
+func DataSourceGoogleContainerCluster() *schema.Resource {
 	// Generate datasource schema from resource
-	dsSchema := datasourceSchemaFromResourceSchema(resourceContainerCluster().Schema)
+	dsSchema := datasourceSchemaFromResourceSchema(ResourceContainerCluster().Schema)
 
 	// Set 'Required' schema elements
 	addRequiredFieldsToSchema(dsSchema, "name")
